@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=320, initial-scale=1"/>
+	<title>jsmpeg streaming</title>
+	<style type="text/css">
+		body {
+			background: #333;
+			text-align: center;
+		}
+		canvas {
+			/* Always stretch the canvas to 640x480, regardless of its
+			internal size. */
+			width: 384px;
+			height: 216px;
+		}
+		h3 {
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<!-- The Canvas size specified here is the "initial" internal resolution. jsmpeg will
+		change this internal resolution to whatever the source provides. The size the
+		canvas is displayed on the website is dictated by the CSS style.
+	-->
+
+	<table>
+		<tr>
+			<td><canvas id="video0"/></td>
+			<td><canvas id="video1"/></td>
+			<td><canvas id="video2"/></td>
+		</tr>
+		<tr>
+			<td><h3>116.251.238.49:8201</h3></td>
+			<td><h3>124.116.242.130:8202</h3></td>
+			<td><h3>120.24.89.109:8203</h3></td>
+		</tr>
+		<tr>
+			<td><canvas id="video3"/></td>
+			<td><canvas id="video4"/></td>
+			<td><canvas id="video5"/></td>
+		</tr>
+		<tr>
+			<td><h3>120.24.61.28:8204</h3></td>
+			<td><h3>123.57.37.104:8205</h3></td>
+			<td><h3>123.56.134.49:8206</h3></td>
+		</tr>
+		<tr>
+			<td><canvas id="video6"/></td>
+			<td><canvas id="video7"/></td>
+		</tr>
+		<tr>
+			<td><h3>219.153.48.34:8201</h3></td>
+			<td><h3>220.169.242.3:8202</h3></td>
+		</tr>
+	</table>
+	
+	<script type="text/javascript" src="jsmpg.js"></script>
+	<script type="text/javascript">
+		// Show loading notice
+		var nodeips = ['116.251.238.49', '124.116.242.130', '120.24.89.109', '120.24.61.28',
+			'123.57.37.104', '123.56.134.49', '219.153.48.34', '220.169.242.3'];
+		for (var i = 0; i < nodeips.length; i++) {
+			var canvas = document.getElementById('video'+i);
+			var client = new WebSocket( 'ws://'+nodeips[i]+':820'+((i%6)+1)+'/');
+			var player = new jsmpeg(client, {canvas:canvas});
+		};
+		/*var canvas = document.getElementById('video1');
+		var client = new WebSocket( 'ws://220.169.242.3:8201/' );
+		var player = new jsmpeg(client, {canvas:canvas});*/
+	</script>
+</body>
+</html>
